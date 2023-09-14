@@ -1,7 +1,6 @@
 package com.example.hng_stage_two.controller
 
 import com.example.hng_stage_two.model.entity.Person
-import com.example.hng_stage_two.repository.PersonRepository
 import com.example.hng_stage_two.service.PersonService
 import org.springframework.web.bind.annotation.*
 
@@ -19,9 +18,9 @@ class PersonController(val service: PersonService) {
     fun readbyId(@PathVariable("user_id") id: Int) = service.readbyId(id)
 
     @PatchMapping("/api/{user_id}")
-    fun update(@PathVariable("user_id") id: Int, person: Person) : Person {
-        person.id = id;
-        return service.update(person)
+    fun update(@PathVariable("user_id") id: Int, @RequestBody person: Person) : Person {
+        person.id = id
+        return service.update(id, person)
     }
 
     @DeleteMapping("/api/{user_id}")
