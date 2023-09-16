@@ -14,7 +14,10 @@ services:
       - db_data:/var/lib/mysql
 
   web:
-    image: ./app.jar
+    image: dockerdemo
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     depends_on:
