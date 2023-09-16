@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 services:
   db:
     image: mysql:8.0
@@ -9,17 +9,14 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
 
   web:
-    image: dockerdemo
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ./app.jar
     ports:
-      - 8080:8080
+      - "8000:8000"
     depends_on:
       - db
     environment:
