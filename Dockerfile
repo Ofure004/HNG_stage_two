@@ -8,4 +8,4 @@ RUN ./gradlew build
 FROM eclipse-temurin:17-jre
 WORKDIR /root
 COPY --from=builder /root/build/libs/*.jar ./app.jar
-ENTRYPOINT ["java","-Dspring.profiles.active=dockerembbed,oauth-security","-jar","./app.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=dockerembbed","oauth-security","-jar","./app.jar"]
