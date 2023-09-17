@@ -47,14 +47,99 @@ Response:
 ```shell
 Ehiremhen Favour has been added to the db successfully and your id is 102
 ```
+The string field only takes numbers as its values
+This is what happens when you try to pass in alphabetical strings as an age
+```shell
+>curl -X POST --location "https://hng-stage-two-emp7.onrender.com/api" 
+\ -H "Content-Type: application/json" 
+\ -d "{ 
+  "firstName": "Favour",
+  "lastName": "Ehiremhen", 
+  "age": "twenty", 
+  "track" : "none" 
+  }"
+```
+Response: 
+```json
+{"errors":["Age must only contain numbers"]}
+```
 - **Get** `/api` -> This returns all the existing records in a database, when successful, an array of all the records is returned.
+
+```shell
+curl -X GET --location "https://hng-stage-two-emp7.onrender.com/api"\ 
+-H "Content-Type: application/json"
+```
+Response :
+```shell
+[{"id":1,"firstName":"Osose","lastName":"Ehiremhen","age":"20","track":"frontend"},
+{"id":3,"firstName":"Ofure","lastName":"Ehiremhen","age":"19","track":"frontend"},
+{"id":103,"firstName":"Favour","lastName":"Ehiremhen","age":"19","track":"none"},
+{"id":104,"firstName":"Favour","lastName":"Ehiremhen","age":"19","track":"none"},
+{"id":102,"firstName":"Favour","lastName":"Ehiremhen","age":"19","track":"none"}]
+```
 - **Get** `/api/{user_id}` -> This returns a specific person's record based on their id, which will be passed in the url as a path parameter.
 When successful, the specific record is displayed.
 When the call fails, for example, the id passed does not exist, a message is displayed saying "Result not found"
+```shell
+curl -X GET --location "https://hng-stage-two-emp7.onrender.com/api/3" \
+-H "Content-Type: application/json"
+```
+Response :
+```shell
+{"id":3,"firstName":"Ofure","lastName":"Ehiremhen","age":"19","track":"frontend"}
+```
+If an id that doesn't exist is passed, a "User not found error is thrown"
+```shell
+curl -X GET --location "https://hng-stage-two-emp7.onrender.com/api/233"
+```
+Response:
+```shell
+{"timestamp":"2023-09-17T17:59:06.586+00:00","status":404,"error":"Not Found","path":"/api/233"}
+```
+
 - **Patch** `/api/{user_id}` -> This updates the person's record. The id which is passed through the url as a path parameter is stored in a variable, and the db is searched for a matching record,
-if the record does not exist, a "User not found" message is displayed.
+if the record does not exist, a "User not found" error is thrown.
 If the record is found, however, the existing record is updated with whatever information is passed in the request body.
+```shell
+curl -X PATCH --location "https://hng-stage-two-emp7.onrender.com/api/3"
+ \ -H "Content-Type: application/json" 
+ \ -d "{ \"firstName\": \"Tayo\", 
+          \"age\": \"29\" 
+        }"
+```
+Response: 
+```shell
+{"id":3,"firstName":"Tayo","lastName":"Ehiremhen","age":"29","track":"frontend"}
+```
+Passing an id that is not in the database 
+```shell
+curl -X PATCH --location "https://hng-stage-two-emp7.onrender.com/api/233" 
+\ -H "Content-Type: application/json" 
+\ -d "{ \"firstName\":\"Tayo\", 
+\"age\": \"29\" }"
+```
+Response:
+```shell
+{"timestamp":"2023-09-17T18:12:56.280+00:00","status":404,"error":"Not Found","path":"/api/233"}
+```
 - **delete** `/api/{user_id}` -> This deletes a particular user's record based on the id passed in the url as a path parameter.
 When successful, a response message pops up which says "User deleted sucessfully".
 If unsuccessful, maybe the record to be deleted is not found, a response message is returned saying "User not found". 
+```shell
+curl -X DELETE --location "https://hng-stage-two-emp7.onrender.com/api/103" 
+\ -H "Content-Type: application/json
+```
+```shell
+User deleted successfully
+```
+
+Passing an id that does not exist
+```shell
+curl -X DELETE --location "https://hng-stage-two-emp7.onrender.com/api/103" 
+\ -H "Content-Type: application/json
+```
+Response:
+```shell
+{"timestamp":"2023-09-17T18:16:09.258+00:00","status":404,"error":"Not Found","path":"/api/52"}
+```
 </details>

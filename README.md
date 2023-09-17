@@ -97,3 +97,26 @@ Host your entire project on GitHub, and provide a well-structured documentation 
 
 ### Live Demo is at https://hng-stage-two-emp7.onrender.com/api
 
+The api has five methods:
+POST: https://hng-stage-two-emp7.onrender.com/api;
+
+GET: https://hng-stage-two-emp7.onrender.com/api;
+
+GET: https://hng-stage-two-emp7.onrender.com/api/{user_id};
+
+PATCH: https://hng-stage-two-emp7.onrender.com/api/{user_id};
+
+DELETE: https://hng-stage-two-emp7.onrender.com/api/{user_id};
+
+For more details, see [Documentation](Documentation.md)
+
+
+### Testing
+Here is a link to the postman collection where you can run the codes in the Postman web app or desktop app
+https://www.postman.com/interstellar-meteor-280605/workspace/s/collection/23312788-38ced708-3594-45d7-a2af-514334de22e0?action=share&creator=23312788
+
+The exported code is in [Testing](Testing.md)
+
+### Diagram
+You can see the diagrams here:
+[Diagram](Diagrams.md)
