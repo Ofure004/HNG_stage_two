@@ -2,6 +2,7 @@ package com.example.hng_stage_two.controller
 
 import com.example.hng_stage_two.model.entity.Person
 import com.example.hng_stage_two.service.PersonService
+import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
 
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping
 class PersonController(val service: PersonService) {
     @PostMapping("/api")
-    fun create(@RequestBody person: Person) = service.create(person)
+    fun create(@Valid @RequestBody person: Person) = service.create(person)
 
     @GetMapping("/api")
     fun readAll() = service.read()
@@ -18,7 +19,7 @@ class PersonController(val service: PersonService) {
     fun readbyId(@PathVariable("user_id") id: Int) = service.readbyId(id)
 
     @PatchMapping("/api/{user_id}")
-    fun update(@PathVariable("user_id") id: Int, @RequestBody person: Person) : Person {
+    fun update(@PathVariable("user_id") id: Int, @Valid @RequestBody person: Person) : Person {
         person.id = id
         return service.update(id, person)
     }
