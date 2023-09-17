@@ -11,9 +11,9 @@ import jakarta.validation.constraints.Pattern
 data class Person(
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Int,
-    var firstName: String? = null,
-    var lastName: String? = null,
+    var firstName: String? = "",
+    var lastName: String? = "",
     @field:Pattern(regexp = "^\\d+\$", message = "Age must only contain numbers")
-    var age: String? = null,
-    var track: String? = null
+    var age: String? = "",
+    var track: String? = ""
 )
