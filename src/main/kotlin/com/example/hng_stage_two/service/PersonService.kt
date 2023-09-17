@@ -19,16 +19,16 @@ class PersonService( val repository: PersonRepository){
     fun update( id : Int , person: Person): Person {
     if( repository.existsById(person.id) && person.id == id){
         var existingUser = repository.findById(person.id).get()
-        if(person.firstName != null){
+        if(person.firstName != ""){
             existingUser.firstName = person.firstName
         }
-        if(person.lastName != null){
+        if(person.lastName != ""){
             existingUser.lastName = person.lastName
         }
-        if(person.age != null){
+        if(person.age != ""){
             existingUser.age = person.age
         }
-        if(person.track != null){
+        if(person.track != ""){
             existingUser.track = person.track
         }
         return repository.save(existingUser)
