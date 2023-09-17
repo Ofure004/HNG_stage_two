@@ -3,7 +3,13 @@ package com.example.hng_stage_two.controller
 import com.example.hng_stage_two.model.entity.Person
 import com.example.hng_stage_two.service.PersonService
 import jakarta.validation.Valid
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.validation.FieldError
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.*
+import java.util.stream.Collectors
 
 
 @RestController
@@ -26,4 +32,23 @@ class PersonController(val service: PersonService) {
 
     @DeleteMapping("/api/{user_id}")
     fun delete(@PathVariable("user_id") id: Int) = service.delete(id)
+}
+
+@RestControllerAdvice
+class globalExceptionHandler{
+
+    @ExceptionHandler(MethodArgumentNotValidException::class)
+    fun handleValidationErrors(ex: MethodArgumentNotValidException): ResponseEntity<MutableMap<String, List<String?>>> {
+        val errors = ex.bindingResult.fieldErrors
+            .stream()
+            .map { fieldError: FieldError -> fieldError.defaultMessage }
+            .collect(Collectors.toList())
+        return ResponseEntity(getErrorsMap(errors), HttpHeaders(), HttpStatus.BAD_REQUEST)
+    }
+
+    private fun getErrorsMap(errors: MutableList<String?>): MutableMap<String, List<String?>> {
+        val errorResponse: MutableMap<String, List<String?>> = HashMap()
+        errorResponse["errors"] = errors
+        return errorResponse
+    }
 }
